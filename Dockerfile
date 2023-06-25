@@ -1,17 +1,16 @@
-#Each instruction in this file creates a new layer
-#Here we are getting our node as Base image
-FROM node:18
-#Creating a new directory for app files and setting path in the container
-RUN mkdir -p /usr/src/app
-#setting working directory in the container
-WORKDIR /usr/src/app
-#copying the package.json file(contains dependencies) from project source dir to container dir
-COPY package.json /usr/src/app
-# installing the dependencies into the container
-RUN npm install
-#copying the source code of Application into the container dir
-COPY . /usr/src/app
-#container exposed network port number
-EXPOSE 8080
-#command to run within the container
-CMD ['node', 'index.js']
+FROM node:18-alpine
+
+# Create an app directory in the docker
+WORKDIR /app
+
+# Copy the package.json and package-lock.json. 
+COPY package*.json ./
+
+# Install production dependencies.
+RUN npm install --only=production
+
+# Copy local code to the container image.
+COPY . ./
+
+# Run the server
+CMD node index.js
