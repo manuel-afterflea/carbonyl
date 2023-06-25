@@ -12,6 +12,6 @@ RUN npm install
 #copying the source code of Application into the container dir
 COPY . /usr/src/app
 #container exposed network port number
-EXPOSE 8000
+EXPOSE 7500
 #command to run within the container
 CMD ['node', 'index.js']
